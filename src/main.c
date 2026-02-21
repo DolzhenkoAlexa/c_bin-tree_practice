@@ -1,7 +1,8 @@
-#include <stdio.h>
 #include "bst.h"
+#include <stdio.h>
 
-int main() {
+int main()
+{
     BST* tree = createBST();
 
     bstInsert(tree, 10);

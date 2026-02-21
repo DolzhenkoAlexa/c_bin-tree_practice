@@ -3,7 +3,8 @@
 #include <stdlib.h>
 
 // Создание дерева
-BST* createBST(void) {
+BST* createBST(void)
+{
     BST* newTree = (BST*)malloc(sizeof(BST));
     if (newTree) {
         newTree->root = NULL;
@@ -14,9 +15,12 @@ BST* createBST(void) {
 // Служебные функции (статичные, видны только в этом файле)
 
 // Поиск
-static bool bstSearch(Node* node, int data) {
-    if (node == NULL) return false;
-    if (node->data == data) return true;
+static bool bstSearch(Node* node, int data)
+{
+    if (node == NULL)
+        return false;
+    if (node->data == data)
+        return true;
     if (data < node->data)
         return bstSearch(node->left, data);
     else
@@ -24,7 +28,8 @@ static bool bstSearch(Node* node, int data) {
 }
 
 // Создание узла
-static Node* createNode(int data) {
+static Node* createNode(int data)
+{
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode) {
         newNode->data = data;
@@ -35,8 +40,10 @@ static Node* createNode(int data) {
 }
 
 // Удаление узла
-static void freeNode(Node* node) {
-    if (node == NULL) return;
+static void freeNode(Node* node)
+{
+    if (node == NULL)
+        return;
     freeNode(node->left);
     freeNode(node->right);
     free(node);
@@ -45,21 +52,26 @@ static void freeNode(Node* node) {
 // Функции для пользователя (объявлены в заголовочном файле)
 
 // Проверка существования элемента в дереве
-bool bstContains(BST* tree, int data) {
-    if (tree == NULL) return false;
+bool bstContains(BST* tree, int data)
+{
+    if (tree == NULL)
+        return false;
     return bstSearch(tree->root, data);
 }
 
 // Вставка
-void bstInsert(BST* tree, int data) {
-    if (tree == NULL) return;
+void bstInsert(BST* tree, int data)
+{
+    if (tree == NULL)
+        return;
 
     Node* current = tree->root;
     Node* parent = NULL;
     int goLeft = 0;
 
     while (current != NULL) {
-        if (data == current->data) return;
+        if (data == current->data)
+            return;
         parent = current;
         if (data < current->data) {
             current = current->left;
@@ -74,21 +86,27 @@ void bstInsert(BST* tree, int data) {
     if (parent == NULL) {
         tree->root = newNode;
     } else {
-        if (goLeft) parent->left = newNode;
-        else parent->right = newNode;
+        if (goLeft)
+            parent->left = newNode;
+        else
+            parent->right = newNode;
     }
 }
 
 // Удаление дерева
-void bstFree(BST* tree) {
-    if (tree == NULL) return;
+void bstFree(BST* tree)
+{
+    if (tree == NULL)
+        return;
     freeNode(tree->root);
     free(tree);
 }
 
 // Печать (для дебаггинга)
-void bstPrint(Node* node) {
-    if (node == NULL) return;
+void bstPrint(Node* node)
+{
+    if (node == NULL)
+        return;
     printf("%d ", node->data);
     bstPrint(node->left);
     bstPrint(node->right);
