@@ -26,3 +26,17 @@ void bstFree(BST* tree);
 
 // Печать (для дебаггинга)
 void bstPrint(Node* node);
+
+// Высота дерева
+int bstHeight(BST* tree);
+
+// Количество узлов
+int bstSize(BST* tree);
+
+// Минимальное значение
+// Если дерево пусто, возвращает -1
+int bstMin(BST* tree);
+
+// Максимальное значение
+// Если дерево пусто, возвращает -1
+int bstMax(BST* tree);

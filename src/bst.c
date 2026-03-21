@@ -111,3 +111,49 @@ void bstPrint(Node* node)
     bstPrint(node->left);
     bstPrint(node->right);
 }
+
+// Высота дерева
+int bstHeight(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return nodeHeight(tree->root);
+}
+
+// Количество узлов
+int bstSize(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return nodeSize(tree->root);
+}
+
+// Минимальное значение
+// Если дерево пусто, возвращает -1
+int bstMin(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return -1;
+
+    Node* current = tree->root;
+    while (current->left != NULL)
+        current = current->left;
+
+    return current->data;
+}
+
+// Максимальное значение
+// Если дерево пусто, возвращает -1
+int bstMax(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return -1;
+
+    Node* current = tree->root;
+    while (current->right != NULL)
+        current = current->right;
+
+    return current->data;
+}

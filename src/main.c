@@ -16,6 +16,10 @@ int main()
     printf("\n");
     printf("Does the tree contain 7? %s\n", bstContains(tree, 7) ? "yes" : "no");
     printf("Does the tree contain 20? %s\n", bstContains(tree, 20) ? "yes" : "no");
+    printf("What is the height of the tree? %d\n", bstHeight(tree));
+    printf("What is the size of the tree? %d\n", bstSize(tree));
+    printf("What is the minimal value of the tree? %d\n", bstMin(tree));
+    printf("What is the maximal value of the tree? %d\n", bstMax(tree));
 
     bstFree(tree);
 
