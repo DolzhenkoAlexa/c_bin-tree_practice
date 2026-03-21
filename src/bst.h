@@ -38,6 +38,7 @@ void bstPrint(Node* node);
 Iterator* makeIterator(BST* tree);
 
 // Проверка, есть ли следующий элемент
+// Если итератор исчерпан, то выведет "Error: no next element" и вернет -1
 bool iteratorHasNext(Iterator* it);
 
 // Возвращает следующий элемент
