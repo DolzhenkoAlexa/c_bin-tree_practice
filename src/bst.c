@@ -111,3 +111,34 @@ void bstPrint(Node* node)
     bstPrint(node->left);
     bstPrint(node->right);
 }
+
+// Задача B - рекурсивные обходы
+void bstInorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstInorder(root->left);
+    printf("%d ", root->data);
+    bstInorder(root->right);
+}
+
+void bstPreorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    printf("%d ", root->data);
+    bstPreorder(root->left);
+    bstPreorder(root->right);
+}
+
+void bstPostorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstPostorder(root->left);
+    bstPostorder(root->right);
+    printf("%d ", root->data);
+}

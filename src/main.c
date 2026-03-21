@@ -12,6 +12,19 @@ int main()
     bstInsert(tree, 12);
 
     bstPrint(tree->root);
+    printf("\n\n");
+
+    // Задача B - демонстрация обходов
+    printf("Inorder traversal (left-root-right): ");
+    bstInorder(tree->root);
+    printf("\n");
+
+    printf("Preorder traversal (root-left-right): ");
+    bstPreorder(tree->root);
+    printf("\n");
+
+    printf("Postorder traversal (left-right-root): ");
+    bstPostorder(tree->root);
 
     printf("\n");
     printf("Does the tree contain 7? %s\n", bstContains(tree, 7) ? "yes" : "no");

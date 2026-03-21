@@ -26,3 +26,8 @@ void bstFree(BST* tree);
 
 // Печать (для дебаггинга)
 void bstPrint(Node* node);
+
+// Задача B - обходы дерева
+void bstInorder(Node* root);
+void bstPreorder(Node* root);
+void bstPostorder(Node* root);
