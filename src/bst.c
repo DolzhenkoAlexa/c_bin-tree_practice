@@ -50,7 +50,8 @@ static void freeNode(Node* node)
 }
 
 // Рекурсивная функция нахождения высоты узла
-static int nodeHeight(Node* node) {
+static int nodeHeight(Node* node)
+{
     if (node == NULL)
         return 0;
 
@@ -61,7 +62,8 @@ static int nodeHeight(Node* node) {
 }
 
 // Рекурсивная функция нахождения размера узла
-static int nodeSize(Node* node) {
+static int nodeSize(Node* node)
+{
     if (node == NULL)
         return 0;
 
