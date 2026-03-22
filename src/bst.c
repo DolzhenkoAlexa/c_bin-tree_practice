@@ -49,6 +49,25 @@ static void freeNode(Node* node)
     free(node);
 }
 
+// Рекурсивная функция нахождения высоты узла
+static int nodeHeight(Node* node) {
+    if (node == NULL)
+        return 0;
+
+    int leftHeight = nodeHeight(node->left);
+    int rightHeight = nodeHeight(node->right);
+
+    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
+// Рекурсивная функция нахождения размера узла
+static int nodeSize(Node* node) {
+    if (node == NULL)
+        return 0;
+
+    return 1 + nodeSize(node->left) + nodeSize(node->right);
+}
+
 // Функции для пользователя (объявлены в заголовочном файле)
 
 // Проверка существования элемента в дереве
