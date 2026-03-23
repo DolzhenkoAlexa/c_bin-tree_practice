@@ -14,7 +14,6 @@ int main()
     bstPrint(tree->root);
     printf("\n\n");
 
-    // Задача B - демонстрация обходов
     printf("Inorder traversal (left-root-right): ");
     bstInorder(tree->root);
     printf("\n");

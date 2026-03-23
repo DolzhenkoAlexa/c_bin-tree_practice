@@ -112,7 +112,7 @@ void bstPrint(Node* node)
     bstPrint(node->right);
 }
 
-// Задача B - рекурсивные обходы
+// Симметричный обход
 void bstInorder(Node* root)
 {
     if (root == NULL)
@@ -123,6 +123,7 @@ void bstInorder(Node* root)
     bstInorder(root->right);
 }
 
+// Прямой обход
 void bstPreorder(Node* root)
 {
     if (root == NULL)
@@ -133,6 +134,7 @@ void bstPreorder(Node* root)
     bstPreorder(root->right);
 }
 
+// Обратный обход
 void bstPostorder(Node* root)
 {
     if (root == NULL)
