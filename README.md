@@ -10,3 +10,8 @@
 * Разгуляева Ада Игоревна
 * email:  adada0901@gmail.com / st140450@student.spbu.ru
 * tg: @ada1ra
+
+
+* Иванова Алина Алексеевна
+* email:  alinaiva07@mail.ru / st140268@student.spbu.ru
+* tg: @ialina07
