@@ -31,5 +31,43 @@ int main()
 
     bstFree(tree);
 
+    BST* tree1 = createBST();
+    bstInsert(tree1, 10);
+    bstInsert(tree1, 5);
+    bstInsert(tree1, 15);
+    bstInsert(tree1, 3);
+    bstInsert(tree1, 7);
+
+    printf("Tree 1: ");
+    bstInorder(tree1->root);
+    printf("\n");
+
+    BST* tree2 = createBST();
+    bstInsert(tree2, 12);
+    bstInsert(tree2, 8);
+    bstInsert(tree2, 20);
+    bstInsert(tree2, 1);
+
+    printf("Tree 2: ");
+    bstInorder(tree2->root);
+    printf("\n\n");
+
+    BST* merged = bstMerge(tree1, tree2);
+
+    printf("Merged tree: ");
+    bstInorder(merged->root);
+    printf("\n");
+
+    printf("\nOriginal Tree 1: ");
+    bstInorder(tree1->root);
+    printf("\n");
+
+    printf("Original Tree 2: ");
+    bstInorder(tree2->root);
+    printf("\n");
+
+    bstFree(tree1);
+    bstFree(tree2);
+    bstFree(merged);
     return 0;
 }
