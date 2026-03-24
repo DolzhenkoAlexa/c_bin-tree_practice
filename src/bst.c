@@ -111,3 +111,36 @@ void bstPrint(Node* node)
     bstPrint(node->left);
     bstPrint(node->right);
 }
+
+// Симметричный обход
+void bstInorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstInorder(root->left);
+    printf("%d ", root->data);
+    bstInorder(root->right);
+}
+
+// Прямой обход
+void bstPreorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    printf("%d ", root->data);
+    bstPreorder(root->left);
+    bstPreorder(root->right);
+}
+
+// Обратный обход
+void bstPostorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstPostorder(root->left);
+    bstPostorder(root->right);
+    printf("%d ", root->data);
+}

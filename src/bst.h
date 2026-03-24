@@ -26,3 +26,12 @@ void bstFree(BST* tree);
 
 // Печать (для дебаггинга)
 void bstPrint(Node* node);
+
+// Симметричный обход (левое поддерево, корень, правое поддерево)
+void bstInorder(Node* root);
+
+// Прямой обход (корень, левое поддерево, правое поддерево)
+void bstPreorder(Node* root);
+
+// Обратный обход (левое поддерево, правое поддерево, корень)
+void bstPostorder(Node* root);
