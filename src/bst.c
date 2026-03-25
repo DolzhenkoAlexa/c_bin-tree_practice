@@ -49,6 +49,27 @@ static void freeNode(Node* node)
     free(node);
 }
 
+// Рекурсивная функция нахождения высоты узла
+static int nodeHeight(Node* node)
+{
+    if (node == NULL)
+        return 0;
+
+    int leftHeight = nodeHeight(node->left);
+    int rightHeight = nodeHeight(node->right);
+
+    return (leftHeight > rightHeight ? leftHeight : rightHeight) + 1;
+}
+
+// Рекурсивная функция нахождения размера узла
+static int nodeSize(Node* node)
+{
+    if (node == NULL)
+        return 0;
+
+    return 1 + nodeSize(node->left) + nodeSize(node->right);
+}
+
 // Функции для пользователя (объявлены в заголовочном файле)
 
 // Проверка существования элемента в дереве
@@ -112,6 +133,51 @@ void bstPrint(Node* node)
     bstPrint(node->right);
 }
 
+// Высота дерева
+int bstHeight(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return nodeHeight(tree->root);
+}
+
+// Количество узлов
+int bstSize(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return nodeSize(tree->root);
+}
+
+// Минимальное значение
+// Если дерево пусто, возвращает -1
+int bstMin(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return -1;
+
+    Node* current = tree->root;
+    while (current->left != NULL)
+        current = current->left;
+
+    return current->data;
+}
+
+// Максимальное значение
+// Если дерево пусто, возвращает -1
+int bstMax(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return -1;
+
+    Node* current = tree->root;
+    while (current->right != NULL)
+        current = current->right;
+
+    return current->data;
+}
 // Симметричный обход
 void bstInorder(Node* root)
 {
