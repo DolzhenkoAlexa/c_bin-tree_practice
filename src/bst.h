@@ -48,3 +48,6 @@ void bstPreorder(Node* root);
 
 // Обратный обход (левое поддерево, правое поддерево, корень)
 void bstPostorder(Node* root);
+
+// Слияние двух деревьев
+BST* bstMerge(BST* tree1, BST* tree2);

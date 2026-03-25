@@ -210,3 +210,38 @@ void bstPostorder(Node* root)
     bstPostorder(root->right);
     printf("%d ", root->data);
 }
+
+// Функция для добавления всех элементов из одного дерева в другое
+static void addAllNodes(Node* sourceRoot, BST* targetTree)
+{
+    if (sourceRoot == NULL)
+        return;
+
+    // Рекурсивно обходим все узлы и вставляем
+    addAllNodes(sourceRoot->left, targetTree);
+    bstInsert(targetTree, sourceRoot->data);
+    addAllNodes(sourceRoot->right, targetTree);
+}
+
+BST* bstMerge(BST* tree1, BST* tree2)
+{
+    if (tree1 == NULL && tree2 == NULL)
+        return NULL;
+
+    // Создаем новое дерево
+    BST* mergedTree = createBST();
+    if (mergedTree == NULL)
+        return NULL;
+
+    // Добавляем все элементы из первого дерева
+    if (tree1 != NULL && tree1->root != NULL) {
+        addAllNodes(tree1->root, mergedTree);
+    }
+
+    // Добавляем все элементы из второго дерева
+    if (tree2 != NULL && tree2->root != NULL) {
+        addAllNodes(tree2->root, mergedTree);
+    }
+
+    return mergedTree;
+}
