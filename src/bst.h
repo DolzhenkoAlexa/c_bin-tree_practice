@@ -14,9 +14,9 @@ typedef struct BST {
 
 // Итератор
 typedef struct Iterator {
-    Node** stack;     // стек узлов
-    int buffer;     // ёмкость стека
-    int top;          // вершина стека (-1 если пуст)
+    Node** stack; // стек узлов
+    int buffer; // ёмкость стека
+    int top; // вершина стека (-1 если пуст)
 } Iterator;
 
 // Создание дерева
