@@ -1,7 +1,7 @@
 #include "bst.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 #define INITIAL_STACK_SIZE 32
 
