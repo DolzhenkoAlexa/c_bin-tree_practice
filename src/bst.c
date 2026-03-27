@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define INITIAL_STACK_SIZE 32
+
 // Создание дерева
 BST* createBST(void)
 {
