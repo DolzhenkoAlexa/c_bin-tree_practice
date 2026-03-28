@@ -311,12 +311,13 @@ int iteratorNextElem(Iterator* it)
     Node* current = node->right;
     while (current != NULL) {
         if (it->top + 1 >= it->buffer) {
-            it->buffer *= 2;
-            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * it->buffer);
+            int newBuffer = it->buffer * 2;
+            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * newBuffer);
             if (newStack == NULL) {
                 return result;
             }
             it->stack = newStack;
+            it->buffer = newBuffer;
         }
         it->stack[++it->top] = current;
         current = current->left;
