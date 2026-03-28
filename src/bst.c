@@ -276,13 +276,13 @@ Iterator* makeIterator(BST* tree)
         // Расширяем
         if (it->top + 1 >= it->buffer) {
             it->buffer *= 2;
-            Node** new_stack = (Node**)realloc(it->stack, sizeof(Node*) * it->buffer);
-            if (new_stack == NULL) {
+            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * it->buffer);
+            if (newStack == NULL) {
                 free(it->stack);
                 free(it);
                 return NULL;
             }
-            it->stack = new_stack;
+            it->stack = newStack;
         }
         it->stack[++it->top] = current;
         current = current->left;
