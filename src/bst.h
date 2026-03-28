@@ -51,3 +51,6 @@ void bstPostorder(Node* root);
 
 // Слияние двух деревьев
 BST* bstMerge(BST* tree1, BST* tree2);
+
+// Проверка, является ли дерево корректным бинарным деревом поиска (BST)
+bool bstIsValid(BST* tree);
