@@ -77,3 +77,7 @@ BST* bstMerge(BST* tree1, BST* tree2);
 
 // Проверка, является ли дерево корректным бинарным деревом поиска (BST)
 bool bstIsValid(BST* tree);
+
+// Возвращает k-й элемент дерева
+// Если k <= 0, k > bstSize(tree) или дерево пустое, функция возвращает -1
+int bstKthMin(BST* tree, int k);

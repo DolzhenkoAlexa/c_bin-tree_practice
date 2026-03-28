@@ -42,6 +42,15 @@ int main()
 
     printf("Is the tree a valid BST? %s\n", bstIsValid(tree) ? "yes" : "no");
 
+    printf("1st minimum: %d\n", bstKthMin(tree, 1));
+    printf("2nd minimum: %d\n", bstKthMin(tree, 2));
+    printf("3rd minimum: %d\n", bstKthMin(tree, 3));
+    printf("4th minimum: %d\n", bstKthMin(tree, 4));
+    printf("5th minimum: %d\n", bstKthMin(tree, 5));
+
+    printf("0th minimum (error expected): %d\n", bstKthMin(tree, 0));
+    printf("10th minimum (error expected): %d\n", bstKthMin(tree, 10));
+
     bstFree(tree);
 
     BST* tree1 = createBST();
@@ -72,6 +81,10 @@ int main()
     printf("\n");
 
     printf("Is the merged tree a valid BST? %s\n", bstIsValid(merged) ? "yes" : "no");
+
+    printf("1st minimum: %d\n", bstKthMin(merged, 1));
+    printf("5th minimum: %d\n", bstKthMin(merged, 5));
+    printf("9th minimum: %d\n", bstKthMin(merged, 9));
 
     printf("\nOriginal Tree 1: ");
     bstInorder(tree1->root);

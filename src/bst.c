@@ -113,6 +113,27 @@ static Node* deleteNode(Node* node, int value)
     return node;
 }
 
+// Рекурсивная функция для поиска k-го минимального элемента
+static bool kthMin(Node* node, int k, int* counter, int* result)
+{
+    if (node == NULL)
+        return false;
+
+    // Обходим левое поддерево
+    if (kthMin(node->left, k, counter, result))
+        return true;
+
+    // Текущий узел
+    (*counter)++;
+    if (*counter == k) {
+        *result = node->data;
+        return true;
+    }
+
+    // Обходим правое поддерево
+    return kthMin(node->right, k, counter, result);
+}
+
 // Функции для пользователя (объявлены в заголовочном файле)
 
 // Проверка существования элемента в дереве
@@ -406,4 +427,32 @@ bool bstIsValid(BST* tree)
         return true;
 
     return isValidBSTHelper(tree->root, INT_MIN, INT_MAX);
+}
+
+// Поиск k-го минимального элемента
+int bstKthMin(BST* tree, int k)
+{
+    // Проверка корректности входных данных
+    if (tree == NULL || tree->root == NULL) {
+        printf("Error: Tree is empty\n");
+        return -1;
+    }
+
+    if (k <= 0) {
+        printf("Error: k must be positive\n");
+        return -1;
+    }
+
+    int size = bstSize(tree);
+    if (k > size) {
+        printf("Error: k (%d) exceeds tree size (%d)\n", k, size);
+        return -1;
+    }
+
+    int counter = 0;
+    int result = -1;
+
+    kthMin(tree->root, k, &counter, &result);
+
+    return result;
 }
