@@ -83,6 +83,7 @@ static Node* findMinNode(Node* node)
 }
 
 // Удаление узла
+static Node* deleteNode(Node* node, int value)
 {
     if (node == NULL)
         return NULL;
