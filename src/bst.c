@@ -83,16 +83,15 @@ static Node* findMinNode(Node* node)
 }
 
 // Удаление узла
-static Node* deleteNode(Node* node, int value)
 {
     if (node == NULL)
         return NULL;
 
-    if (value < node->data)
+    if (value < node->data) {
         node->left = deleteNode(node->left, value);
-    if (value > node->data)
+    } else if (value > node->data) {
         node->right = deleteNode(node->right, value);
-    else {
+    } else {
         // Узел найден
         if (node->left == NULL) {
             Node* rightChild = node->right;
