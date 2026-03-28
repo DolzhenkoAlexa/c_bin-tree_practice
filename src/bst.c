@@ -136,6 +136,120 @@ void bstPrint(Node* node)
     bstPrint(node->right);
 }
 
+// Высота дерева
+int bstHeight(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return nodeHeight(tree->root);
+}
+
+// Количество узлов
+int bstSize(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return 0;
+
+    return nodeSize(tree->root);
+}
+
+// Минимальное значение
+// Если дерево пусто, возвращает -1
+int bstMin(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return -1;
+
+    Node* current = tree->root;
+    while (current->left != NULL)
+        current = current->left;
+
+    return current->data;
+}
+
+// Максимальное значение
+// Если дерево пусто, возвращает -1
+int bstMax(BST* tree)
+{
+    if (tree == NULL || tree->root == NULL)
+        return -1;
+
+    Node* current = tree->root;
+    while (current->right != NULL)
+        current = current->right;
+
+    return current->data;
+}
+
+// Симметричный обход
+void bstInorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstInorder(root->left);
+    printf("%d ", root->data);
+    bstInorder(root->right);
+}
+
+// Прямой обход
+void bstPreorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    printf("%d ", root->data);
+    bstPreorder(root->left);
+    bstPreorder(root->right);
+}
+
+// Обратный обход
+void bstPostorder(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstPostorder(root->left);
+    bstPostorder(root->right);
+    printf("%d ", root->data);
+}
+
+// Функция для добавления всех элементов из одного дерева в другое
+static void addAllNodes(Node* sourceRoot, BST* targetTree)
+{
+    if (sourceRoot == NULL)
+        return;
+
+    // Рекурсивно обходим все узлы и вставляем
+    addAllNodes(sourceRoot->left, targetTree);
+    bstInsert(targetTree, sourceRoot->data);
+    addAllNodes(sourceRoot->right, targetTree);
+}
+
+BST* bstMerge(BST* tree1, BST* tree2)
+{
+    if (tree1 == NULL && tree2 == NULL)
+        return NULL;
+
+    // Создаем новое дерево
+    BST* mergedTree = createBST();
+    if (mergedTree == NULL)
+        return NULL;
+
+    // Добавляем все элементы из первого дерева
+    if (tree1 != NULL && tree1->root != NULL) {
+        addAllNodes(tree1->root, mergedTree);
+    }
+
+    // Добавляем все элементы из второго дерева
+    if (tree2 != NULL && tree2->root != NULL) {
+        addAllNodes(tree2->root, mergedTree);
+    }
+
+    return mergedTree;
+}
+
 // Функции для итератора
 Iterator* makeIterator(BST* tree)
 {
@@ -148,7 +262,7 @@ Iterator* makeIterator(BST* tree)
         return NULL;
     }
 
-    // Динамическое расшширение стека
+    // Динамическое расширение стека
     it->buffer = INITIAL_STACK_SIZE;
     it->stack = (Node**)malloc(sizeof(Node*) * it->buffer);
     if (it->stack == NULL) {
@@ -218,115 +332,4 @@ void iteratorFree(Iterator* it)
         }
         free(it);
     }
-// Высота дерева
-int bstHeight(BST* tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return 0;
-
-    return nodeHeight(tree->root);
-}
-
-// Количество узлов
-int bstSize(BST* tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return 0;
-
-    return nodeSize(tree->root);
-}
-
-// Минимальное значение
-// Если дерево пусто, возвращает -1
-int bstMin(BST* tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return -1;
-
-    Node* current = tree->root;
-    while (current->left != NULL)
-        current = current->left;
-
-    return current->data;
-}
-
-// Максимальное значение
-// Если дерево пусто, возвращает -1
-int bstMax(BST* tree)
-{
-    if (tree == NULL || tree->root == NULL)
-        return -1;
-
-    Node* current = tree->root;
-    while (current->right != NULL)
-        current = current->right;
-
-    return current->data;
-}
-// Симметричный обход
-void bstInorder(Node* root)
-{
-    if (root == NULL)
-        return;
-
-    bstInorder(root->left);
-    printf("%d ", root->data);
-    bstInorder(root->right);
-}
-
-// Прямой обход
-void bstPreorder(Node* root)
-{
-    if (root == NULL)
-        return;
-
-    printf("%d ", root->data);
-    bstPreorder(root->left);
-    bstPreorder(root->right);
-}
-
-// Обратный обход
-void bstPostorder(Node* root)
-{
-    if (root == NULL)
-        return;
-
-    bstPostorder(root->left);
-    bstPostorder(root->right);
-    printf("%d ", root->data);
-}
-
-// Функция для добавления всех элементов из одного дерева в другое
-static void addAllNodes(Node* sourceRoot, BST* targetTree)
-{
-    if (sourceRoot == NULL)
-        return;
-
-    // Рекурсивно обходим все узлы и вставляем
-    addAllNodes(sourceRoot->left, targetTree);
-    bstInsert(targetTree, sourceRoot->data);
-    addAllNodes(sourceRoot->right, targetTree);
-}
-
-BST* bstMerge(BST* tree1, BST* tree2)
-{
-    if (tree1 == NULL && tree2 == NULL)
-        return NULL;
-
-    // Создаем новое дерево
-    BST* mergedTree = createBST();
-    if (mergedTree == NULL)
-        return NULL;
-
-    // Добавляем все элементы из первого дерева
-    if (tree1 != NULL && tree1->root != NULL) {
-        addAllNodes(tree1->root, mergedTree);
-    }
-
-    // Добавляем все элементы из второго дерева
-    if (tree2 != NULL && tree2->root != NULL) {
-        addAllNodes(tree2->root, mergedTree);
-    }
-
-    return mergedTree;
 }
