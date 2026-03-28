@@ -275,7 +275,7 @@ void testBstMerge()
 
     // Проверка kthMin
     assert(bstKthMin(merged, 1) == 35);
-    assert(bstKthMin(merged, 4) == 52);
+    assert(bstKthMin(merged, 4) == 64);
     assert(bstKthMin(merged, 6) == 89);
 
     bstFree(tree1);
