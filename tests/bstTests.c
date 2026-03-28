@@ -70,29 +70,27 @@ void testBstDelete()
 {
     printf("Testing bstDelete: ");
     BST* tree = createBST();
-    int arr[] = {
-        52,
-        35,
-        78,
-        105,
-        47,
-        64,
-        89
-    };
-    for (int i = 0; i < 7; i++) {
-        bstInsert(tree, arr[i]);
-    }
+
+    bstInsert(tree, 52);
+    bstInsert(tree, 35);
+    bstInsert(tree, 78);
+    bstInsert(tree, 105);
+    bstInsert(tree, 47);
+    bstInsert(tree, 64);
+    bstInsert(tree, 89);
 
     // Удаление листа
     bstDelete(tree, 105);
     assert(!bstContains(tree, 105));
     assert(bstSize(tree) == 6);
 
-    // Удаление узла
+    // Удаление узла с одним ребенком
     bstDelete(tree, 35);
     assert(!bstContains(tree, 35));
     assert(bstSize(tree) == 5);
+    assert(bstContains(tree, 47));
 
+    // Удаление узла с двумя детьми
     bstDelete(tree, 78);
     assert(!bstContains(tree, 78));
     assert(bstSize(tree) == 4);
@@ -202,6 +200,12 @@ void testBstIsValid()
     assert(bstIsValid(tree) == false);
 
     bstFree(tree);
+
+    // Тест на пустое дерево
+    BST* emptyTree = createBST();
+    assert(bstIsValid(emptyTree) == true);
+    bstFree(emptyTree);
+
     printf("Test bstIsValid passed\n");
 }
 
@@ -209,18 +213,14 @@ void testBstKthMin()
 {
     printf("Testing bstKthMin: ");
     BST* tree = createBST();
-    int arr[] = {
-        52,
-        35,
-        78,
-        12,
-        47,
-        64,
-        89
-    };
-    for (int i = 0; i < 7; i++) {
-        bstInsert(tree, arr[i]);
-    }
+
+    bstInsert(tree, 52);
+    bstInsert(tree, 35);
+    bstInsert(tree, 78);
+    bstInsert(tree, 12);
+    bstInsert(tree, 47);
+    bstInsert(tree, 64);
+    bstInsert(tree, 89);
 
     assert(bstKthMin(tree, 1) == 12);
     assert(bstKthMin(tree, 2) == 35);
@@ -245,20 +245,13 @@ void testBstMerge()
     BST* tree1 = createBST();
     BST* tree2 = createBST();
 
-    int arr1[] = {
-        52,
-        35,
-        78
-    };
-    int arr2[] = {
-        47,
-        64,
-        89
-    };
-    for (int i = 0; i < 3; i++) {
-        bstInsert(tree1, arr1[i]);
-        bstInsert(tree2, arr2[i]);
-    }
+    bstInsert(tree1, 52);
+    bstInsert(tree1, 35);
+    bstInsert(tree1, 78);
+
+    bstInsert(tree2, 47);
+    bstInsert(tree2, 64);
+    bstInsert(tree2, 89);
 
     BST* merged = bstMerge(tree1, tree2);
     assert(merged != NULL);
@@ -270,6 +263,21 @@ void testBstMerge()
     assert(bstContains(merged, 78));
     assert(bstContains(merged, 89));
 
+    // Проверка, что исходные деревья не изменились
+    assert(bstSize(tree1) == 3);
+    assert(bstSize(tree2) == 3);
+    assert(bstContains(tree1, 52));
+    assert(bstContains(tree1, 35));
+    assert(bstContains(tree1, 78));
+    assert(bstContains(tree2, 47));
+    assert(bstContains(tree2, 64));
+    assert(bstContains(tree2, 89));
+
+    // Проверка kthMin
+    assert(bstKthMin(merged, 1) == 35);
+    assert(bstKthMin(merged, 4) == 52);
+    assert(bstKthMin(merged, 6) == 89);
+
     bstFree(tree1);
     bstFree(tree2);
     bstFree(merged);
@@ -280,18 +288,14 @@ void testIterator()
 {
     printf("Testing iterator: ");
     BST* tree = createBST();
-    int arr[] = {
-        52,
-        35,
-        78,
-        12,
-        47,
-        64,
-        89
-    };
-    for (int i = 0; i < 7; i++) {
-        bstInsert(tree, arr[i]);
-    }
+
+    bstInsert(tree, 52);
+    bstInsert(tree, 35);
+    bstInsert(tree, 78);
+    bstInsert(tree, 12);
+    bstInsert(tree, 47);
+    bstInsert(tree, 64);
+    bstInsert(tree, 89);
 
     Iterator* it = makeIterator(tree);
     assert(it != NULL);
