@@ -46,3 +46,27 @@ int iteratorNextElem(Iterator* it);
 
 // Освобождение памяти итератора
 void iteratorFree(Iterator* it);
+// Высота дерева
+int bstHeight(BST* tree);
+
+// Количество узлов
+int bstSize(BST* tree);
+
+// Минимальное значение
+// Если дерево пусто, возвращает -1
+int bstMin(BST* tree);
+
+// Максимальное значение
+// Если дерево пусто, возвращает -1
+int bstMax(BST* tree);
+// Симметричный обход (левое поддерево, корень, правое поддерево)
+void bstInorder(Node* root);
+
+// Прямой обход (корень, левое поддерево, правое поддерево)
+void bstPreorder(Node* root);
+
+// Обратный обход (левое поддерево, правое поддерево, корень)
+void bstPostorder(Node* root);
+
+// Слияние двух деревьев
+BST* bstMerge(BST* tree1, BST* tree2);
