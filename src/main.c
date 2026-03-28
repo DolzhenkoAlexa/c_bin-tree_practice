@@ -28,10 +28,19 @@ int main()
     printf("\n");
     printf("Does the tree contain 7? %s\n", bstContains(tree, 7) ? "yes" : "no");
     printf("Does the tree contain 20? %s\n", bstContains(tree, 20) ? "yes" : "no");
+
+    printf("\n");
+    printf("Attempt to delete '7'\n");
+    bstDelete(tree, 7);
+    printf("Does the tree contain 7? %s\n", bstContains(tree, 7) ? "yes" : "no");
+
+    printf("\n");
     printf("What is the height of the tree? %d\n", bstHeight(tree));
     printf("What is the size of the tree? %d\n", bstSize(tree));
     printf("What is the minimal value of the tree? %d\n", bstMin(tree));
     printf("What is the maximal value of the tree? %d\n", bstMax(tree));
+
+    printf("Is the tree a valid BST? %s\n", bstIsValid(tree) ? "yes" : "no");
 
     bstFree(tree);
 
@@ -62,6 +71,8 @@ int main()
     bstInorder(merged->root);
     printf("\n");
 
+    printf("Is the merged tree a valid BST? %s\n", bstIsValid(merged) ? "yes" : "no");
+
     printf("\nOriginal Tree 1: ");
     bstInorder(tree1->root);
     printf("\n");
@@ -73,5 +84,10 @@ int main()
     bstFree(tree1);
     bstFree(tree2);
     bstFree(merged);
+
+    BST* emptyTree = createBST();
+    printf("Is empty tree a valid BST? %s\n", bstIsValid(emptyTree) ? "yes" : "no");
+    bstFree(emptyTree);
+
     return 0;
 }

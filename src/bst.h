@@ -28,6 +28,9 @@ bool bstContains(BST* tree, int data);
 // Вставка
 void bstInsert(BST* tree, int data);
 
+// Удаление узла с заданным значением
+void bstDelete(BST* tree, int value);
+
 // Удаление дерева
 void bstFree(BST* tree);
 
@@ -59,6 +62,7 @@ int bstMin(BST* tree);
 // Максимальное значение
 // Если дерево пусто, возвращает -1
 int bstMax(BST* tree);
+
 // Симметричный обход (левое поддерево, корень, правое поддерево)
 void bstInorder(Node* root);
 
@@ -70,3 +74,6 @@ void bstPostorder(Node* root);
 
 // Слияние двух деревьев
 BST* bstMerge(BST* tree1, BST* tree2);
+
+// Проверка, является ли дерево корректным бинарным деревом поиска (BST)
+bool bstIsValid(BST* tree);
