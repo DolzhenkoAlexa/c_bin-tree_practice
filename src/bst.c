@@ -71,6 +71,45 @@ static int nodeSize(Node* node)
     return 1 + nodeSize(node->left) + nodeSize(node->right);
 }
 
+// Нахождение минимального узла в поддереве
+static Node* findMinNode(Node* node)
+{
+    while (node && node->left)
+        node = node->left;
+    return node;
+}
+
+// Удаление узла
+static Node* deleteNode(Node* node, int value)
+{
+    if (node == NULL)
+        return NULL;
+
+    if (value < node->data)
+        node->left = deleteNode(node->left, value);
+    if (value > node->data)
+        node->right = deleteNode(node->right, value);
+    else {
+        // Узел найден
+        if (node->left == NULL) {
+            Node* rightChild = node->right;
+            free(node);
+            return rightChild;
+        }
+        if (node->right == NULL) {
+            Node* leftChild = node->left;
+            free(node);
+            return leftChild;
+        }
+        // Узел с двумя детьми
+        Node* minNode = findMinNode(node->right);
+        node->data = minNode->data;
+        node->right = deleteNode(node->right, minNode->data);
+    }
+
+    return node;
+}
+
 // Функции для пользователя (объявлены в заголовочном файле)
 
 // Проверка существования элемента в дереве
@@ -113,6 +152,13 @@ void bstInsert(BST* tree, int data)
         else
             parent->right = newNode;
     }
+}
+
+// Удаление узла с заданным значением
+void bstDelete(BST* tree, int value)
+{
+    if (tree != NULL)
+        tree->root = deleteNode(tree->root, value);
 }
 
 // Удаление дерева
@@ -224,6 +270,7 @@ static void addAllNodes(Node* sourceRoot, BST* targetTree)
     addAllNodes(sourceRoot->right, targetTree);
 }
 
+// Слияние двух деревьев
 BST* bstMerge(BST* tree1, BST* tree2)
 {
     if (tree1 == NULL && tree2 == NULL)
