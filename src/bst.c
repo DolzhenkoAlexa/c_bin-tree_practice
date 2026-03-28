@@ -314,6 +314,7 @@ int iteratorNextElem(Iterator* it)
             int newBuffer = it->buffer * 2;
             Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * newBuffer);
             if (newStack == NULL) {
+                fprintf(stderr, "Error: not enough memory for iterator realloc\n");
                 return result;
             }
             it->stack = newStack;
