@@ -70,7 +70,15 @@ void testBstDelete()
 {
     printf("Testing bstDelete: ");
     BST* tree = createBST();
-    int arr[] = {52, 35, 78, 105, 47, 64, 89};
+    int arr[] = {
+        52,
+        35,
+        78,
+        105,
+        47,
+        64,
+        89
+    };
     for (int i = 0; i < 7; i++) {
         bstInsert(tree, arr[i]);
     }
@@ -201,7 +209,15 @@ void testBstKthMin()
 {
     printf("Testing bstKthMin: ");
     BST* tree = createBST();
-    int arr[] = {52, 35, 78, 12, 47, 64, 89};
+    int arr[] = {
+        52,
+        35,
+        78,
+        12,
+        47,
+        64,
+        89
+    };
     for (int i = 0; i < 7; i++) {
         bstInsert(tree, arr[i]);
     }
@@ -229,8 +245,16 @@ void testBstMerge()
     BST* tree1 = createBST();
     BST* tree2 = createBST();
 
-    int arr1[] = {52, 35, 78};
-    int arr2[] = {47, 64, 89};
+    int arr1[] = {
+        52,
+        35,
+        78
+    };
+    int arr2[] = {
+        47,
+        64,
+        89
+    };
     for (int i = 0; i < 3; i++) {
         bstInsert(tree1, arr1[i]);
         bstInsert(tree2, arr2[i]);
@@ -256,7 +280,15 @@ void testIterator()
 {
     printf("Testing iterator: ");
     BST* tree = createBST();
-    int arr[] = {52, 35, 78, 12, 47, 64, 89};
+    int arr[] = {
+        52,
+        35,
+        78,
+        12,
+        47,
+        64,
+        89
+    };
     for (int i = 0; i < 7; i++) {
         bstInsert(tree, arr[i]);
     }
@@ -264,7 +296,15 @@ void testIterator()
     Iterator* it = makeIterator(tree);
     assert(it != NULL);
 
-    int expected[] = {12, 35, 47, 52, 64, 78, 89};
+    int expected[] = {
+        12,
+        35,
+        47,
+        52,
+        64,
+        78,
+        89
+    };
     for (int i = 0; i < 7; i++) {
         assert(iteratorHasNext(it));
         assert(iteratorNextElem(it) == expected[i]);
@@ -305,5 +345,4 @@ int main()
     printf("\nALL TESTS PASSED\n");
 
     return 0;
-}
 }
