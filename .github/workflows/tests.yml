@@ -1,0 +1,17 @@
+name: Tests
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential
+      - name: Compile tests
+        run: gcc -Wall -Wextra tests/bstTests.c src/bst.c -o bstTests -I src/
+      - name: Run tests
+        run: ./bstTests
