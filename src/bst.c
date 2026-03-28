@@ -1,4 +1,5 @@
 #include "bst.h"
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -244,4 +245,29 @@ BST* bstMerge(BST* tree1, BST* tree2)
     }
 
     return mergedTree;
+}
+
+// Вспомогательная рекурсивная функция с диапазонами допустимых значений
+static bool isValidBSTHelper(Node* node, int min, int max)
+{
+    // Пустой узел - корректный
+    if (node == NULL)
+        return true;
+
+    // Проверяем, что значение узла в допустимом  диапазоне
+    if (node->data <= min || node->data >= max)
+        return false;
+
+    // Рекурсивно проверяем левое и правое поддеревья
+    return isValidBSTHelper(node->left, min, node->data) && isValidBSTHelper(node->right, node->data, max);
+}
+
+// Проверка, является ли дерево корректным бинарным деревом поиска (BST)
+bool bstIsValid(BST* tree)
+{
+    // Пустое дерево считается корректным BST
+    if (tree == NULL || tree->root == NULL)
+        return true;
+
+    return isValidBSTHelper(tree->root, INT_MIN, INT_MAX);
 }
