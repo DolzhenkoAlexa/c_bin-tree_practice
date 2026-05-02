@@ -6,20 +6,19 @@
 
 #define INITIAL_STACK_SIZE 32
 
+typedef enum {
+    GoLeft,
+    GoRight
+} Direction;
+
 // Создание дерева
 BST* createBST(void)
 {
-    return (BST*)calloc(1, sizeof(BST));
-}
-
-// Создание узла
-static Node* createNode(int data)
-{
-    Node* newNode = (Node*)calloc(1, sizeof(Node));
-    if (newNode) {
-        newNode->data = data;
+    BST* newTree = (BST*)malloc(sizeof(BST));
+    if (newTree) {
+        newTree->root = NULL;
     }
-    return newNode;
+    return newTree;
 }
 
 // Служебные функции (статичные, видны только в этом файле)
@@ -35,6 +34,18 @@ static bool bstSearch(Node* node, int data)
         return bstSearch(node->left, data);
     else
         return bstSearch(node->right, data);
+}
+
+// Создание узла
+static Node* createNode(int data)
+{
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    if (newNode) {
+        newNode->data = data;
+        newNode->left = NULL;
+        newNode->right = NULL;
+    }
+    return newNode;
 }
 
 // Удаление узла
@@ -146,7 +157,7 @@ void bstInsert(BST* tree, int data)
 
     Node* current = tree->root;
     Node* parent = NULL;
-    int goLeft = 0;
+    Direction goLeft = GoRight;
 
     while (current != NULL) {
         if (data == current->data)
@@ -154,10 +165,10 @@ void bstInsert(BST* tree, int data)
         parent = current;
         if (data < current->data) {
             current = current->left;
-            goLeft = 1;
+            goLeft = GoLeft;
         } else {
             current = current->right;
-            goLeft = 0;
+            goLeft = GoRight;
         }
     }
 
@@ -165,7 +176,7 @@ void bstInsert(BST* tree, int data)
     if (parent == NULL) {
         tree->root = newNode;
     } else {
-        if (goLeft)
+        if (goLeft == GoLeft)
             parent->left = newNode;
         else
             parent->right = newNode;
@@ -313,19 +324,6 @@ BST* bstMerge(BST* tree1, BST* tree2)
     return mergedTree;
 }
 
-// Вспомогательная функция для расширения стека итератора
-static bool expandIteratorStack(Iterator* it)
-{
-    int newBuffer = it->buffer * 2;
-    Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * newBuffer);
-    if (newStack == NULL) {
-        return false;
-    }
-    it->stack = newStack;
-    it->buffer = newBuffer;
-    return true;
-}
-
 // Функции для итератора
 Iterator* makeIterator(BST* tree)
 {
@@ -338,6 +336,7 @@ Iterator* makeIterator(BST* tree)
         return NULL;
     }
 
+    // Динамическое расширение стека
     it->buffer = INITIAL_STACK_SIZE;
     it->stack = (Node**)malloc(sizeof(Node*) * it->buffer);
     if (it->stack == NULL) {
@@ -348,12 +347,16 @@ Iterator* makeIterator(BST* tree)
 
     Node* current = tree->root;
     while (current != NULL) {
+        // Расширяем
         if (it->top + 1 >= it->buffer) {
-            if (!expandIteratorStack(it)) {
+            it->buffer *= 2;
+            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * it->buffer);
+            if (newStack == NULL) {
                 free(it->stack);
                 free(it);
                 return NULL;
             }
+            it->stack = newStack;
         }
         it->stack[++it->top] = current;
         current = current->left;
@@ -382,10 +385,14 @@ int iteratorNextElem(Iterator* it)
     Node* current = node->right;
     while (current != NULL) {
         if (it->top + 1 >= it->buffer) {
-            if (!expandIteratorStack(it)) {
+            int newBuffer = it->buffer * 2;
+            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * newBuffer);
+            if (newStack == NULL) {
                 fprintf(stderr, "Error: not enough memory for iterator realloc\n");
                 return result;
             }
+            it->stack = newStack;
+            it->buffer = newBuffer;
         }
         it->stack[++it->top] = current;
         current = current->left;
@@ -410,7 +417,7 @@ static bool isValidBSTHelper(Node* node, int min, int max)
     if (node == NULL)
         return true;
 
-    // Проверяем, что значение узла в допустимом диапазоне
+    // Проверяем, что значение узла в допустимом  диапазоне
     if (node->data <= min || node->data >= max)
         return false;
 
