@@ -11,14 +11,30 @@ typedef enum {
     GoRight
 } Direction;
 
+struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+struct BST {
+    Node* root;
+};
+
+// Итератор
+struct Iterator {
+    // Стек узлов
+    Node** stack;
+    // Ёмкость стека
+    int buffer;
+    // Вершина стека (-1 если пуст)
+    int top;
+};
+
 // Создание дерева
 BST* createBST(void)
 {
-    BST* newTree = (BST*)malloc(sizeof(BST));
-    if (newTree) {
-        newTree->root = NULL;
-    }
-    return newTree;
+    return calloc(1, sizeof(BST));
 }
 
 // Служебные функции (статичные, видны только в этом файле)
@@ -39,12 +55,9 @@ static bool bstSearch(Node* node, int data)
 // Создание узла
 static Node* createNode(int data)
 {
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    if (newNode) {
+    Node* newNode = (Node*)calloc(1, sizeof(Node));
+    if (newNode)
         newNode->data = data;
-        newNode->left = NULL;
-        newNode->right = NULL;
-    }
     return newNode;
 }
 
@@ -139,6 +152,49 @@ static bool kthMin(Node* node, int k, int* counter, int* result)
     return kthMin(node->right, k, counter, result);
 }
 
+// Печать (для дебаггинга)
+static void bstPrintHelp(Node* node)
+{
+    if (node == NULL)
+        return;
+    printf("%d ", node->data);
+    bstPrintHelp(node->left);
+    bstPrintHelp(node->right);
+}
+
+// Симметричный обход
+static void bstInorderHelp(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstInorderHelp(root->left);
+    printf("%d ", root->data);
+    bstInorderHelp(root->right);
+}
+
+// Прямой обход
+static void bstPreorderHelp(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    printf("%d ", root->data);
+    bstPreorderHelp(root->left);
+    bstPreorderHelp(root->right);
+}
+
+// Обратный обход
+static void bstPostorderHelp(Node* root)
+{
+    if (root == NULL)
+        return;
+
+    bstPostorderHelp(root->left);
+    bstPostorderHelp(root->right);
+    printf("%d ", root->data);
+}
+
 // Функции для пользователя (объявлены в заголовочном файле)
 
 // Проверка существования элемента в дереве
@@ -200,13 +256,10 @@ void bstFree(BST* tree)
 }
 
 // Печать (для дебаггинга)
-void bstPrint(Node* node)
+void bstPrint(BST* tree)
 {
-    if (node == NULL)
-        return;
-    printf("%d ", node->data);
-    bstPrint(node->left);
-    bstPrint(node->right);
+    if (tree)
+        bstPrintHelp(tree->root);
 }
 
 // Высота дерева
@@ -256,36 +309,24 @@ int bstMax(BST* tree)
 }
 
 // Симметричный обход
-void bstInorder(Node* root)
+void bstInorder(BST* tree)
 {
-    if (root == NULL)
-        return;
-
-    bstInorder(root->left);
-    printf("%d ", root->data);
-    bstInorder(root->right);
+    if (tree)
+        bstInorderHelp(tree->root);
 }
 
 // Прямой обход
-void bstPreorder(Node* root)
+void bstPreorder(BST* tree)
 {
-    if (root == NULL)
-        return;
-
-    printf("%d ", root->data);
-    bstPreorder(root->left);
-    bstPreorder(root->right);
+    if (tree)
+        bstPreorderHelp(tree->root);
 }
 
 // Обратный обход
-void bstPostorder(Node* root)
+void bstPostorder(BST* tree)
 {
-    if (root == NULL)
-        return;
-
-    bstPostorder(root->left);
-    bstPostorder(root->right);
-    printf("%d ", root->data);
+    if (tree)
+        bstPreorderHelp(tree->root);
 }
 
 // Функция для добавления всех элементов из одного дерева в другое
