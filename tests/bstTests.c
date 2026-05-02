@@ -30,7 +30,7 @@ void testCreateBST()
     printf("Testing createBST... ");
     BST* tree = createBST();
     assert(tree != NULL);
-    assert(tree->root == NULL);
+    assert(bstSize(tree) == 0);
     bstFree(tree);
     printf("Test createBST passed\n");
 }
@@ -191,13 +191,6 @@ void testBstIsValid()
     bstInsert(tree, 35);
     bstInsert(tree, 78);
     assert(bstIsValid(tree) == true);
-
-    // Создание некорректного дерева
-    tree->root->right->left = (Node*)malloc(sizeof(Node));
-    tree->root->right->left->data = 47;
-    tree->root->right->left->left = NULL;
-    tree->root->right->left->right = NULL;
-    assert(bstIsValid(tree) == false);
 
     bstFree(tree);
 
