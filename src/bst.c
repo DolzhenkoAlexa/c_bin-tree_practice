@@ -6,6 +6,11 @@
 
 #define INITIAL_STACK_SIZE 32
 
+typedef enum {
+    GoLeft,
+    GoRight
+} Direction;
+
 // Создание дерева
 BST* createBST(void)
 {
@@ -152,7 +157,7 @@ void bstInsert(BST* tree, int data)
 
     Node* current = tree->root;
     Node* parent = NULL;
-    int goLeft = 0;
+    Direction currentDirection = GoRight;
 
     while (current != NULL) {
         if (data == current->data)
@@ -160,10 +165,10 @@ void bstInsert(BST* tree, int data)
         parent = current;
         if (data < current->data) {
             current = current->left;
-            goLeft = 1;
+            currentDirection = GoLeft;
         } else {
             current = current->right;
-            goLeft = 0;
+            currentDirection = GoRight;
         }
     }
 
@@ -171,7 +176,7 @@ void bstInsert(BST* tree, int data)
     if (parent == NULL) {
         tree->root = newNode;
     } else {
-        if (goLeft)
+        if (currentDirection == GoLeft)
             parent->left = newNode;
         else
             parent->right = newNode;
@@ -404,6 +409,7 @@ void iteratorFree(Iterator* it)
         free(it);
     }
 }
+
 // Вспомогательная рекурсивная функция с диапазонами допустимых значений
 static bool isValidBSTHelper(Node* node, int min, int max)
 {
