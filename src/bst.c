@@ -9,11 +9,17 @@
 // Создание дерева
 BST* createBST(void)
 {
-    BST* newTree = (BST*)malloc(sizeof(BST));
-    if (newTree) {
-        newTree->root = NULL;
+    return (BST*)calloc(1, sizeof(BST));
+}
+
+// Создание узла
+static Node* createNode(int data)
+{
+    Node* newNode = (Node*)calloc(1, sizeof(Node));
+    if (newNode) {
+        newNode->data = data;
     }
-    return newTree;
+    return newNode;
 }
 
 // Служебные функции (статичные, видны только в этом файле)
@@ -29,18 +35,6 @@ static bool bstSearch(Node* node, int data)
         return bstSearch(node->left, data);
     else
         return bstSearch(node->right, data);
-}
-
-// Создание узла
-static Node* createNode(int data)
-{
-    Node* newNode = (Node*)malloc(sizeof(Node));
-    if (newNode) {
-        newNode->data = data;
-        newNode->left = NULL;
-        newNode->right = NULL;
-    }
-    return newNode;
 }
 
 // Удаление узла
@@ -319,6 +313,19 @@ BST* bstMerge(BST* tree1, BST* tree2)
     return mergedTree;
 }
 
+// Вспомогательная функция для расширения стека итератора
+static bool expandIteratorStack(Iterator* it)
+{
+    int newBuffer = it->buffer * 2;
+    Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * newBuffer);
+    if (newStack == NULL) {
+        return false;
+    }
+    it->stack = newStack;
+    it->buffer = newBuffer;
+    return true;
+}
+
 // Функции для итератора
 Iterator* makeIterator(BST* tree)
 {
@@ -331,7 +338,6 @@ Iterator* makeIterator(BST* tree)
         return NULL;
     }
 
-    // Динамическое расширение стека
     it->buffer = INITIAL_STACK_SIZE;
     it->stack = (Node**)malloc(sizeof(Node*) * it->buffer);
     if (it->stack == NULL) {
@@ -342,16 +348,12 @@ Iterator* makeIterator(BST* tree)
 
     Node* current = tree->root;
     while (current != NULL) {
-        // Расширяем
         if (it->top + 1 >= it->buffer) {
-            it->buffer *= 2;
-            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * it->buffer);
-            if (newStack == NULL) {
+            if (!expandIteratorStack(it)) {
                 free(it->stack);
                 free(it);
                 return NULL;
             }
-            it->stack = newStack;
         }
         it->stack[++it->top] = current;
         current = current->left;
@@ -380,14 +382,10 @@ int iteratorNextElem(Iterator* it)
     Node* current = node->right;
     while (current != NULL) {
         if (it->top + 1 >= it->buffer) {
-            int newBuffer = it->buffer * 2;
-            Node** newStack = (Node**)realloc(it->stack, sizeof(Node*) * newBuffer);
-            if (newStack == NULL) {
+            if (!expandIteratorStack(it)) {
                 fprintf(stderr, "Error: not enough memory for iterator realloc\n");
                 return result;
             }
-            it->stack = newStack;
-            it->buffer = newBuffer;
         }
         it->stack[++it->top] = current;
         current = current->left;
@@ -404,6 +402,7 @@ void iteratorFree(Iterator* it)
         free(it);
     }
 }
+
 // Вспомогательная рекурсивная функция с диапазонами допустимых значений
 static bool isValidBSTHelper(Node* node, int min, int max)
 {
@@ -411,7 +410,7 @@ static bool isValidBSTHelper(Node* node, int min, int max)
     if (node == NULL)
         return true;
 
-    // Проверяем, что значение узла в допустимом  диапазоне
+    // Проверяем, что значение узла в допустимом диапазоне
     if (node->data <= min || node->data >= max)
         return false;
 
