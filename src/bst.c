@@ -22,14 +22,14 @@ struct BST {
 };
 
 // Итератор
-typedef struct Iterator {
+struct Iterator {
     // Стек узлов
     Node** stack;
     // Ёмкость стека
     int buffer;
     // Вершина стека (-1 если пуст)
     int top;
-} Iterator;
+};
 
 // Создание дерева
 BST* createBST(void)
