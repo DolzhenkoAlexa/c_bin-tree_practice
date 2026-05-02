@@ -157,7 +157,7 @@ void bstInsert(BST* tree, int data)
 
     Node* current = tree->root;
     Node* parent = NULL;
-    Direction goLeft = GoRight;
+    Direction currentDirection = GoRight;
 
     while (current != NULL) {
         if (data == current->data)
@@ -165,10 +165,10 @@ void bstInsert(BST* tree, int data)
         parent = current;
         if (data < current->data) {
             current = current->left;
-            goLeft = GoLeft;
+            currentDirection = GoLeft;
         } else {
             current = current->right;
-            goLeft = GoRight;
+            currentDirection = GoRight;
         }
     }
 
@@ -176,7 +176,7 @@ void bstInsert(BST* tree, int data)
     if (parent == NULL) {
         tree->root = newNode;
     } else {
-        if (goLeft == GoLeft)
+        if (currentDirection == GoLeft)
             parent->left = newNode;
         else
             parent->right = newNode;
