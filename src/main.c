@@ -11,19 +11,19 @@ int main()
     bstInsert(tree, 7);
     bstInsert(tree, 12);
 
-    bstPrint(tree->root);
+    bstPrint(tree);
     printf("\n\n");
 
     printf("Inorder traversal (left-root-right): ");
-    bstInorder(tree->root);
+    bstInorder(tree);
     printf("\n");
 
     printf("Preorder traversal (root-left-right): ");
-    bstPreorder(tree->root);
+    bstPreorder(tree);
     printf("\n");
 
     printf("Postorder traversal (left-right-root): ");
-    bstPostorder(tree->root);
+    bstPostorder(tree);
 
     printf("\n");
     printf("Does the tree contain 7? %s\n", bstContains(tree, 7) ? "yes" : "no");
@@ -61,7 +61,7 @@ int main()
     bstInsert(tree1, 7);
 
     printf("Tree 1: ");
-    bstInorder(tree1->root);
+    bstInorder(tree1);
     printf("\n");
 
     BST* tree2 = createBST();
@@ -71,13 +71,13 @@ int main()
     bstInsert(tree2, 1);
 
     printf("Tree 2: ");
-    bstInorder(tree2->root);
+    bstInorder(tree2);
     printf("\n\n");
 
     BST* merged = bstMerge(tree1, tree2);
 
     printf("Merged tree: ");
-    bstInorder(merged->root);
+    bstInorder(merged);
     printf("\n");
 
     printf("Is the merged tree a valid BST? %s\n", bstIsValid(merged) ? "yes" : "no");
@@ -87,11 +87,11 @@ int main()
     printf("9th minimum: %d\n", bstKthMin(merged, 9));
 
     printf("\nOriginal Tree 1: ");
-    bstInorder(tree1->root);
+    bstInorder(tree1);
     printf("\n");
 
     printf("Original Tree 2: ");
-    bstInorder(tree2->root);
+    bstInorder(tree2);
     printf("\n");
 
     bstFree(tree1);
